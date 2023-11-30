@@ -36,10 +36,13 @@ class HomeController extends GetxController {
     showSpinner.value = false;
     if (scrollController.offset >= scrollController.position.maxScrollExtent && !scrollController.position.outOfRange) {
       //When scroll reach end then fetch new pokemon again
+      page = page + 1;
+      // showSpinner(true);
+      fetchGraphQLClient();
       if (showSpinner.value == false) {
-          page = page + 1;
-          // showSpinner(true);
-          fetchGraphQLClient();
+          // page = page + 1;
+          // // showSpinner(true);
+          // fetchGraphQLClient();
 
       }
     }
@@ -55,12 +58,12 @@ class HomeController extends GetxController {
   // }
 
   void fetchGraphQLClient() async {
-
+    showSpinner.value = false;
     di.Response responseDio;
 
     url = "https://test-ximit.mahfil.net/api/trending-video/1?page=$page";
     responseDio = await dio.get(url);
-    showSpinner.value = false;
+
 
     // http.Response res = await http.get(Uri.parse(url));
 

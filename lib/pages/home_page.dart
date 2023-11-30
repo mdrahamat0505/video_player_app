@@ -69,12 +69,7 @@ class _HomePageState extends State<HomePage> {
           //   ),
           // ],
           systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: hexToColor('#FFFFFF'),
-            statusBarBrightness: Brightness.dark,
-            statusBarIconBrightness: Brightness.dark,
-            systemNavigationBarIconBrightness: Brightness.dark,
-            systemNavigationBarDividerColor: hexToColor('#FFFFFF'),
-            systemNavigationBarColor: hexToColor('#FFFFFF'),
+            statusBarColor: Colors.white,
           ),
         ),
 
@@ -136,6 +131,7 @@ class _HomePageState extends State<HomePage> {
 
                           Expanded(
                             child: ListView.builder(
+                              controller: logic.scrollController,
                               itemCount: logic.videoViewModelList.value.length,
                               itemBuilder: (context, index) {
                                             return VideoCard(

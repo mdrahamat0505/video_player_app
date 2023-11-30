@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:comment_box/comment/comment.dart';
 import 'package:lecle_yoyo_player/lecle_yoyo_player.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:video_player_app/pages/home_page.dart';
@@ -71,12 +70,7 @@ class _VideoInfoState extends State<VideoInfo> {
           shadowColor: hexToColor('#FFFFFF'),
           titleSpacing: 0,
           systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: hexToColor('#FFFFFF'),
-            statusBarBrightness: Brightness.dark,
-            statusBarIconBrightness: Brightness.dark,
-            systemNavigationBarIconBrightness: Brightness.dark,
-            systemNavigationBarDividerColor: hexToColor('#FFFFFF'),
-            systemNavigationBarColor: hexToColor('#FFFFFF'),
+            statusBarColor: Colors.white,
           ),
         ),
         body: SingleChildScrollView(
