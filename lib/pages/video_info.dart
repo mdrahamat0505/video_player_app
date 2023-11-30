@@ -112,7 +112,7 @@ class _VideoInfoState extends State<VideoInfo> {
                               homeC.valueAutoPlay.value = false;
                             }
 
-                            Get.to(HomePage());
+                            Get.offAll(HomePage());
                             print('Use image search');
                           },
                         ),
