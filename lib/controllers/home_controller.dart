@@ -3,13 +3,17 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player_app/models/video_view_model.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as di;
 
 
 
 class HomeController extends GetxController {
 
   final showSpinner = RxBool(false);
+  final valueAutoPlay = RxBool(false);
+
+  final dio = di.Dio();
 
   final videoViewModel = Rx(VideoViewModel());
   final videoViewModelList = RxList<VideoViewModel>([]);
@@ -51,28 +55,26 @@ class HomeController extends GetxController {
   // }
 
   void fetchGraphQLClient() async {
+
+    di.Response responseDio;
+
     url = "https://test-ximit.mahfil.net/api/trending-video/1?page=$page";
-    showSpinner.value = true;
+    responseDio = await dio.get(url);
+    showSpinner.value = false;
 
-    http.Response res = await http.get(Uri.parse(url));
+    // http.Response res = await http.get(Uri.parse(url));
 
 
-    if (res.statusCode == 200) {
+    if (responseDio.statusCode == 200) {
       videoViewModelList.clear();
-      String data = res.body;
-      var jsonData = jsonDecode(data);
+      var result = responseDio.data;
+     // var jsonData = json.decode(data);
 
-     var dataS = jsonData['results'];
+     var dataResult = result['results'];
 
-      var shoutIncidents = await (dataS).map((e) => VideoViewModel.fromJson(e)).toList();
-
-     // VideoViewModel newsData = VideoViewModel.fromJson(jsonData['results']);
+      var shoutIncidents = await (dataResult).map((e) => VideoViewModel.fromJson(e)).toList();
 
       if (shoutIncidents  != 0) {
-        // newsList.value.addAll(newsData.articles as dynamic);
-        // news.addAll(newsData.articles as dynamic);
-        //scrollController.jumpTo(0.0);
-
 
         videoViewModelList.value = shoutIncidents.cast<VideoViewModel>();
         showSpinner.value = true;
@@ -91,19 +93,6 @@ class HomeController extends GetxController {
       update();
     }
 
-
-    // final pokemonsQuery = PokemonsQuery(variables: PokemonsArguments(quantity: page));
-    // final queryOptions = QueryOptions(
-    //   document: pokemonsQuery.document,
-    //   variables: pokemonsQuery.variables.toJson(),
-    //   fetchPolicy: FetchPolicy.cacheAndNetwork,
-    // );
-  //  final result = await Config().graphQLClient.query(queryOptions);
-  //   if (result.hasException) {
-  //     throw result.exception!;
-  //   }
-
-  //  pokemons.value = PokemonsQueryGraphql.fromJson(result.data!);
     showSpinner.value = true;
     update(['aVeryUniqueID']);
     update();

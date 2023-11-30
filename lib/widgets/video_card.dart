@@ -97,7 +97,7 @@ class VideoCard extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!
-                              .copyWith(fontSize: 15.0,color: hexToColor('#1A202C')),
+                              .copyWith(fontSize: 15.0,color: hexToColor('#1A202C'),fontFamily: 'Regular'),
                         ),
                       ),
                       if(video.dateAndTime != null)

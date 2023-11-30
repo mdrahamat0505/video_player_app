@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:comment_box/comment/comment.dart';
 import 'package:lecle_yoyo_player/lecle_yoyo_player.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'package:video_player_app/pages/home_page.dart';
 
+import '../controllers/home_controller.dart';
 import '../helpers/hex_color.dart';
 import '../models/video_view_model.dart';
 
@@ -20,6 +24,36 @@ class VideoInfo extends StatefulWidget {
 }
 
 class _VideoInfoState extends State<VideoInfo> {
+  final homeC = HomeController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    homeC.valueAutoPlay.value = true;
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    homeC.valueAutoPlay.value = false;
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    homeC.valueAutoPlay.value = false;
+    super.deactivate();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -35,27 +69,7 @@ class _VideoInfoState extends State<VideoInfo> {
           centerTitle: true,
           elevation: 0,
           shadowColor: hexToColor('#FFFFFF'),
-
-          // leading: IconButton(
-          //   icon: Image.asset(
-          //     'assets/img/Icon.png',
-          //     height: 24,
-          //     width: 24,
-          //     fit: BoxFit.cover,
-          //     color: hexToColor('#000000'),
-          //   ),
-          //   iconSize: 24,
-          //   onPressed: () {},
-          //   color: hexToColor('#FFFFFF'),
-          // ),
           titleSpacing: 0,
-
-          // actions: [
-          //   getDefaultImageFromAsset(context: context),
-          //   const SizedBox(
-          //     width: 14,
-          //   ),
-          // ],
           systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: hexToColor('#FFFFFF'),
             statusBarBrightness: Brightness.dark,
@@ -70,78 +84,111 @@ class _VideoInfoState extends State<VideoInfo> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Obx(() {
+                return Stack(
+                  children: [
+                    YoYoPlayer(
+                      autoPlayVideoAfterInit: homeC.valueAutoPlay.value,
+                      aspectRatio: 16 / 9,
+                      url: widget.video.manifest,
+                      videoStyle: VideoStyle(),
+                      videoLoadingStyle: VideoLoadingStyle(),
+                    ),
+                    Positioned(
+                      left: 20.0,
+                      top: 10.0,
+                      child: SizedBox(
+                        height: 12,
+                        child: IconButton(
+                          padding: EdgeInsets.all(0),
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () {
+                            if (homeC.valueAutoPlay.value != false) {
+                              homeC.valueAutoPlay.value = false;
+                            } else {
+                              homeC.valueAutoPlay.value = false;
+                            }
 
-              Stack(
-                children: [
-                  YoYoPlayer(
-                    aspectRatio: 16 / 9,
-                    url: widget.video.manifest,
-                    videoStyle: VideoStyle(),
-                    videoLoadingStyle: VideoLoadingStyle(),
-                  ),
-                  Positioned(
-                    left: 20.0,
-                    top: 10.0 ,
-                    child: SizedBox(
-                      height: 12,
-                      child: IconButton(
-                        padding:  EdgeInsets.all(0),
-                        icon:  Icon(Icons.arrow_back,color: Colors.grey,),
-                        onPressed: () {
-                          print('Use image search');
-                        },
+                            Get.to(HomePage());
+                            print('Use image search');
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                );
+              }),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+
+                      Text(
+                        widget.video.title,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodyLarge!
+                            .copyWith(fontSize: 15.0),
+                      ),
+                      const SizedBox(height: 10.0),
+                      Text(
+                        '${widget.video.viewers.toString()} views •  ${timeago
+                            .format(
+                            (DateTime.parse(widget.video.dateAndTime)))}',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(
+                          fontSize: 14.0,
+                          color: hexToColor('#718096'),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      //const Divider(),
+                      _ActionsRow(video: widget.video),
+                      // const Divider(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      _AuthorInfo(user: widget.video),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      const Divider(),
+                      //  SizedBox(height: 10,),
+                      _CommentRow(
+                        user: widget.video,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      //const Divider(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      _CommentShow(
+                        user: widget.video,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      const Divider(),
+                    ]),
               ),
-
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 10,),
-
-
-                Text(
-                  widget.video.title,
-                  style:
-                  Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 15.0),
-                ),
-                const SizedBox(height: 10.0),
-                Text(
-                  '${widget.video.viewers.toString()} views • ${DateFormat.yMMMd().format(DateTime.parse(widget.video.dateAndTime))}',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(fontSize: 14.0, color: hexToColor('#718096'),),
-                ),
-                SizedBox(height: 10,),
-                //const Divider(),
-                _ActionsRow(video: widget.video),
-               // const Divider(),
-                SizedBox(height: 10,),
-                _AuthorInfo(user: widget.video),
-                SizedBox(height: 10,),
-                const Divider(),
-              //  SizedBox(height: 10,),
-                _CommentRow(user: widget.video,),
-                SizedBox(height: 10,),
-                //const Divider(),
-                SizedBox(height: 10,),
-                _CommentShow(user: widget.video,),
-                SizedBox(height: 10,),
-                const Divider(),
-
-              ]),
-          ),
-
-
             ],
           ),
         ),
@@ -166,12 +213,12 @@ class _ActionsRow extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildAction(context, Icons.heart_broken_outlined, 'MASH ALLAH (12K) '),
+          _buildAction(
+              context, Icons.heart_broken_outlined, 'MASH ALLAH (12K) '),
           _buildAction(context, Icons.thumb_up_outlined, 'LIKE (12K)'),
           //_buildAction(context, Icons.thumb_down_outlined, video.disl),
           _buildAction(context, Icons.reply_rounded, 'SHARE'),
           _buildAction(context, Icons.report_outlined, 'REPORT'),
-
         ],
       ),
     );
@@ -183,7 +230,6 @@ class _ActionsRow extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(5.0),
         child: Container(
-
           padding: const EdgeInsets.all(5.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -191,24 +237,30 @@ class _ActionsRow extends StatelessWidget {
             boxShadow: [
               BoxShadow(color: Colors.grey, spreadRadius: 0),
             ],
-            border: Border.all(
-              color: Colors.grey
-            ),
+            border: Border.all(color: Colors.grey),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon ,size: 18,color:  hexToColor('#718096'),),
+              Icon(
+                icon,
+                size: 18,
+                color: hexToColor('#718096'),
+              ),
               const SizedBox(height: 5.0),
               SizedBox(
                 width: 60,
                 child: Text(
                   label,
                   maxLines: 1,
-                  style: Theme.of(context)
+                  style: Theme
+                      .of(context)
                       .textTheme
                       .bodyLarge!
-                      .copyWith(color: hexToColor('#718096'), fontSize: 10,fontWeight: FontWeight.w400),
+                      .copyWith(
+                      color: hexToColor('#718096'),
+                      fontSize: 10,
+                      fontWeight: FontWeight.w400),
                 ),
               ),
             ],
@@ -247,30 +299,41 @@ class _AuthorInfo extends StatelessWidget {
                     user.channelName,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .bodyLarge!
-                        .copyWith(color: hexToColor('#1A202C'), fontSize: 14,fontWeight: FontWeight.w500),
+                        .copyWith(
+                        color: hexToColor('#1A202C'),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
                 Flexible(
                   child: Text(
                     '${user.channelSubscriber} subscribers',
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .bodyLarge!
-                        .copyWith(color: hexToColor('#718096'), fontSize: 11,fontWeight: FontWeight.w400),
+                        .copyWith(
+                        color: hexToColor('#718096'),
+                        fontSize: 11,
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(width: 3,),
+          SizedBox(
+            width: 3,
+          ),
           SizedBox(
             // width: 109,
             height: 33,
-            child: ElevatedButton.icon(   // <-- ElevatedButton
+            child: ElevatedButton.icon(
+              // <-- ElevatedButton
               onPressed: () {},
               style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
               // style: ElevatedButton.styleFrom(
@@ -285,12 +348,16 @@ class _AuthorInfo extends StatelessWidget {
                 color: Colors.white,
               ),
 
-              label: Text('SUBSCRIBE',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(color: Colors.white, fontSize: 12,fontWeight: FontWeight.w500),
-
+              label: Text(
+                'SUBSCRIBE',
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500),
               ),
             ),
           ),
@@ -311,14 +378,12 @@ class _AuthorInfo extends StatelessWidget {
 }
 
 class _CommentRow extends StatelessWidget {
-
   final VideoViewModel user;
 
   const _CommentRow({
     Key? key,
     required this.user,
   }) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -335,61 +400,72 @@ class _CommentRow extends StatelessWidget {
                 "Comments 7.5K",
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context)
+                style: Theme
+                    .of(context)
                     .textTheme
                     .bodyLarge!
-                    .copyWith(color: hexToColor('#718096'), fontSize: 12,fontWeight: FontWeight.w400),
+                    .copyWith(
+                    color: hexToColor('#718096'),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400),
               ),
             ),
             Spacer(),
-            SizedBox(width: 50,),
+            SizedBox(
+              width: 50,
+            ),
             Column(
               children: [
                 SizedBox(
                   height: 9,
                   child: IconButton(
-                    padding:  EdgeInsets.all(0),
-                    icon:  Icon(Icons.arrow_drop_up,color: hexToColor('#718096'),),
+                    padding: EdgeInsets.all(0),
+                    icon: Icon(
+                      Icons.arrow_drop_up,
+                      color: hexToColor('#718096'),
+                    ),
                     onPressed: () {
                       print('Use image search');
                     },
                   ),
                 ),
                 IconButton(
-                  padding:  EdgeInsets.all(0),
-                  icon:  Icon(Icons.arrow_drop_down,color: hexToColor('#718096'),),
+                  padding: EdgeInsets.all(0),
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: hexToColor('#718096'),
+                  ),
                   onPressed: () {
                     print('Use image search');
                   },
                 ),
               ],
             ),
-
           ],
         ),
 
         SearchBar(
-
           backgroundColor: MaterialStateProperty.all(
-              const Color.fromARGB(255, 255, 255, 255)
-          ),
+              const Color.fromARGB(255, 255, 255, 255)),
           trailing: [
             IconButton(
-              icon:  Icon(Icons.send_sharp,color: hexToColor('#718096'),),
+              icon: Icon(
+                Icons.send_sharp,
+                color: hexToColor('#718096'),
+              ),
               onPressed: () {
                 print('Use image search');
               },
             ),
           ],
           elevation: MaterialStateProperty.all(1.0),
-          constraints: const BoxConstraints(
-              minHeight: 47.0
-          ),
+          constraints: const BoxConstraints(minHeight: 47.0),
           shape: MaterialStateProperty.all(const ContinuousRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
           )),
           hintText: 'Add Comment',
-          hintStyle: MaterialStateProperty.all( TextStyle(color:  hexToColor('#CBD5E0'))),
+          hintStyle: MaterialStateProperty.all(
+              TextStyle(color: hexToColor('#CBD5E0'))),
           // other arguments
         )
         // CommentBox(CBD5E0
@@ -453,10 +529,14 @@ class _CommentShow extends StatelessWidget {
                   child: Text(
                     "${user.channelName} 2 days ago",
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .bodyLarge!
-                        .copyWith(color: hexToColor('#718096'), fontSize: 12,fontWeight: FontWeight.w400),
+                        .copyWith(
+                        color: hexToColor('#718096'),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
                 Flexible(
@@ -464,10 +544,14 @@ class _CommentShow extends StatelessWidget {
                     'হুজুরের বক্তব্য গুলো ইংরেজি তে অনুবাদ করে সারা পৃথিবীর মানুষদের কে শুনিয়ে দিতে হবে। কথা গুলো খুব দামি',
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .bodyLarge!
-                        .copyWith(color: hexToColor('#4A5568'), fontSize: 12,fontWeight: FontWeight.w400),
+                        .copyWith(
+                        color: hexToColor('#4A5568'),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
               ],
@@ -478,5 +562,3 @@ class _CommentShow extends StatelessWidget {
     );
   }
 }
-
-
