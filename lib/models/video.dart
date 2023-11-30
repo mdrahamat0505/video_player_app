@@ -1,4 +1,3 @@
-
 class Video {
   final String id;
   final User author;

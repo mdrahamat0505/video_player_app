@@ -1,7 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'video_view_model.g.dart';
 
-
 @JsonSerializable(explicitToJson: true)
 class VideoViewModel {
   dynamic thumbnail;
@@ -62,7 +61,7 @@ class VideoViewModel {
     dynamic channelImage,
     dynamic channelName,
     dynamic channelUsername,
-   dynamic isVerified,
+    dynamic isVerified,
     dynamic channelSlug,
     dynamic channelSubscriber,
     dynamic channelId,
@@ -93,12 +92,8 @@ class VideoViewModel {
         duration: duration ?? this.duration,
       );
 
-
-
   factory VideoViewModel.fromJson(Map<String, dynamic> json) =>
       _$VideoViewModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$VideoViewModelToJson(this);
-
 }
-

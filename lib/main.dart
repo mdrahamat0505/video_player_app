@@ -4,19 +4,17 @@ import 'package:get/get.dart';
 import 'package:video_player_app/controllers/home_controller.dart';
 import 'package:video_player_app/pages/home_page.dart';
 
-void main() async{
+void main() async {
   initAppConfig();
-  runApp( MyApp());
+  runApp(MyApp());
 }
 
-
- initAppConfig() async {
+initAppConfig() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Get.put(HomeController());
 }
 
 class MyApp extends StatelessWidget {
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -28,11 +26,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home:  HomePage(),
+      home: HomePage(),
     );
   }
 }
-
 
 // class home extends StatefulWidget {
 //
@@ -47,5 +44,3 @@ class MyApp extends StatelessWidget {
 //     return const Placeholder();
 //   }
 // }
-
-

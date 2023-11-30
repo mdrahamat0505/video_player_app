@@ -4,8 +4,6 @@ import 'package:shimmer/shimmer.dart';
 import 'placeholders.dart';
 
 class LoadingListPage extends StatefulWidget {
-
-
   @override
   State<LoadingListPage> createState() => _LoadingListPageState();
 }

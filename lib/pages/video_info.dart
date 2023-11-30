@@ -127,27 +127,20 @@ class _VideoInfoState extends State<VideoInfo> {
 
                       Text(
                         widget.video.title,
-                        style: Theme
-                            .of(context)
+                        style: Theme.of(context)
                             .textTheme
                             .bodyLarge!
                             .copyWith(fontSize: 15.0),
                       ),
                       const SizedBox(height: 10.0),
                       Text(
-                        '${widget.video.viewers.toString()} views •  ${timeago
-                            .format(
-                            (DateTime.parse(widget.video.dateAndTime)))}',
+                        '${widget.video.viewers.toString()} views •  ${timeago.format((DateTime.parse(widget.video.dateAndTime)))}',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .bodySmall!
-                            .copyWith(
-                          fontSize: 14.0,
-                          color: hexToColor('#718096'),
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              fontSize: 14.0,
+                              color: hexToColor('#718096'),
+                            ),
                       ),
                       SizedBox(
                         height: 10,
@@ -247,11 +240,7 @@ class _ActionsRow extends StatelessWidget {
                 child: Text(
                   label,
                   maxLines: 1,
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: hexToColor('#718096'),
                       fontSize: 10,
                       fontWeight: FontWeight.w400),
@@ -293,11 +282,7 @@ class _AuthorInfo extends StatelessWidget {
                     user.channelName,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: hexToColor('#1A202C'),
                         fontSize: 14,
                         fontWeight: FontWeight.w500),
@@ -307,11 +292,7 @@ class _AuthorInfo extends StatelessWidget {
                   child: Text(
                     '${user.channelSubscriber} subscribers',
                     overflow: TextOverflow.ellipsis,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: hexToColor('#718096'),
                         fontSize: 11,
                         fontWeight: FontWeight.w400),
@@ -344,11 +325,7 @@ class _AuthorInfo extends StatelessWidget {
 
               label: Text(
                 'SUBSCRIBE',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: Colors.white,
                     fontSize: 12,
                     fontWeight: FontWeight.w500),
@@ -394,11 +371,7 @@ class _CommentRow extends StatelessWidget {
                 "Comments 7.5K",
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     color: hexToColor('#718096'),
                     fontSize: 12,
                     fontWeight: FontWeight.w400),
@@ -523,11 +496,7 @@ class _CommentShow extends StatelessWidget {
                   child: Text(
                     "${user.channelName} 2 days ago",
                     overflow: TextOverflow.ellipsis,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: hexToColor('#718096'),
                         fontSize: 12,
                         fontWeight: FontWeight.w400),
@@ -538,11 +507,7 @@ class _CommentShow extends StatelessWidget {
                     'হুজুরের বক্তব্য গুলো ইংরেজি তে অনুবাদ করে সারা পৃথিবীর মানুষদের কে শুনিয়ে দিতে হবে। কথা গুলো খুব দামি',
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: hexToColor('#4A5568'),
                         fontSize: 12,
                         fontWeight: FontWeight.w400),

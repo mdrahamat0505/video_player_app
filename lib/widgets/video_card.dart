@@ -23,7 +23,7 @@ class VideoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(VideoInfo(video:video));
+        Get.to(VideoInfo(video: video));
         // context.read(selectedVideoProvider).state = video;
         // context
         //     .read(miniPlayerControllerProvider)
@@ -35,20 +35,18 @@ class VideoCard extends StatelessWidget {
         children: [
           Stack(
             children: [
-
-
-              if(video.thumbnail != null)
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: hasPadding ? 12.0 : 0,
+              if (video.thumbnail != null)
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: hasPadding ? 12.0 : 0,
+                  ),
+                  child: Image.network(
+                    video.thumbnail.toString(),
+                    height: 220.0,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                child: Image.network(
-                  video.thumbnail.toString(),
-                  height: 220.0,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
               Positioned(
                 bottom: 8.0,
                 right: hasPadding ? 20.0 : 8.0,
@@ -66,23 +64,25 @@ class VideoCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if(video.channelImage != null)
-                GestureDetector(
-                  onTap: () {
-                    Get.to(VideoInfo(video:video));
-
-                  },
-                  child: CircleAvatar(
-                    foregroundImage: NetworkImage(video.channelImage.toString()),
+                if (video.channelImage != null)
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(VideoInfo(video: video));
+                    },
+                    child: CircleAvatar(
+                      foregroundImage:
+                          NetworkImage(video.channelImage.toString()),
+                    ),
                   ),
-                ),
                 const SizedBox(width: 8.0),
                 Expanded(
                   child: Column(
@@ -97,23 +97,28 @@ class VideoCard extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!
-                              .copyWith(fontSize: 15.0,color: hexToColor('#1A202C'),fontFamily: 'Regular'),
+                              .copyWith(
+                                  fontSize: 15.0,
+                                  color: hexToColor('#1A202C'),
+                                  fontFamily: 'Regular'),
                         ),
                       ),
-                      if(video.dateAndTime != null)
-                        SizedBox(height: 5,),
+                      if (video.dateAndTime != null)
+                        SizedBox(
+                          height: 5,
+                        ),
 
-                        //timeago.format(DateTime.parse(video.dateAndTime))
+                      //timeago.format(DateTime.parse(video.dateAndTime))
                       Flexible(
                         child: Text(
                           '${video.viewers.toString()} views • ${DateFormat.yMMMd().format(DateTime.parse(video.dateAndTime))}',
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(fontSize: 14.0, color: hexToColor('#718096'),),
+                          style:
+                              Theme.of(context).textTheme.bodySmall!.copyWith(
+                                    fontSize: 14.0,
+                                    color: hexToColor('#718096'),
+                                  ),
                         ),
                       ),
                     ],
@@ -121,14 +126,17 @@ class VideoCard extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                   // Get.to(VideoInfo(video:video));
+                    // Get.to(VideoInfo(video:video));
                   },
-                  child:  Icon(Icons.more_vert, size: 20.0, color: hexToColor('#CBD5E0')),
+                  child: Icon(Icons.more_vert,
+                      size: 20.0, color: hexToColor('#CBD5E0')),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
         ],
       ),
     );

@@ -72,7 +72,6 @@ class _HomePageState extends State<HomePage> {
             statusBarColor: Colors.white,
           ),
         ),
-
         resizeToAvoidBottomInset: false,
         body: GetBuilder<HomeController>(
           id: 'aVeryUniqueID', // here
@@ -103,10 +102,14 @@ class _HomePageState extends State<HomePage> {
                       homeC.fetchGraphQLClient();
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 12.0,right: 12),
+                      padding: const EdgeInsets.only(left: 12.0, right: 12),
                       child: Column(
                         children: [
-                          Expanded(flex: 0,child: SizedBox(height: 10,)),
+                          Expanded(
+                              flex: 0,
+                              child: SizedBox(
+                                height: 10,
+                              )),
                           Expanded(
                             flex: 0,
                             child: Row(
@@ -114,28 +117,35 @@ class _HomePageState extends State<HomePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                               // SizedBox(width: 12,),
+                                // SizedBox(width: 12,),
                                 Text(
                                   'Trending Videos',
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall!
-                                      .copyWith(fontSize: 20.0,color: hexToColor('#1A202C'), fontWeight: FontWeight.w700),
+                                      .copyWith(
+                                          fontSize: 20.0,
+                                          color: hexToColor('#1A202C'),
+                                          fontWeight: FontWeight.w700),
                                 ),
                                 Spacer(),
                               ],
                             ),
                           ),
-                          Expanded(flex: 0,child: SizedBox(height: 10,)),
-
+                          Expanded(
+                              flex: 0,
+                              child: SizedBox(
+                                height: 10,
+                              )),
                           Expanded(
                             child: ListView.builder(
                               controller: logic.scrollController,
                               itemCount: logic.videoViewModelList.value.length,
                               itemBuilder: (context, index) {
-                                            return VideoCard(
-                                              video: logic.videoViewModelList.value[index],);
+                                return VideoCard(
+                                  video: logic.videoViewModelList.value[index],
+                                );
                               },
                             ),
                           ),
