@@ -40,6 +40,17 @@ Lecle YoYo Video Player is a HLS(.m3u8) video player for flutter. The YoyoPlayer
 
 
 
+https://raw.githubusercontent.com/mdrahamat0505/video_player_app/master/screenshots/Screenshot_2023-11-30-10-58-56-37.png
+
+https://github.com/mdrahamat0505/video_player_app/blob/master/screenshots/Screenshot_2023-11-30-11-02-18-34.png?raw=true
+
+https://raw.githubusercontent.com/mdrahamat0505/video_player_app/master/screenshots/Screenshot_2023-11-30-11-02-25-99.png
+
+https://raw.githubusercontent.com/mdrahamat0505/video_player_app/master/screenshots/Screenshot_2023-11-30-11-02-38-75.png
+
+
+
+
 
 
 
